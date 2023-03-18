@@ -1,4 +1,4 @@
-package ru.netology.web;
+package ru.netology;
 
 
 import org.junit.jupiter.api.AfterEach;
