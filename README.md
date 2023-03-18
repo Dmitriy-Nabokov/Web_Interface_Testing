@@ -1,1 +1,1 @@
-![image](https://user-images.githubusercontent.com/118921829/226116490-439e80a4-6a35-4de2-8817-470c497fb9ec.png)
+[![Build status](https://ci.appveyor.com/api/projects/status/bffwr6tuq5k0w2lo?svg=true)](https://ci.appveyor.com/project/Dmitriy-Nabokov/web-interface-testing)
