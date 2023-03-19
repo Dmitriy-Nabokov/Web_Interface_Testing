@@ -44,7 +44,7 @@ class WebUnterfaceTest {
     }
 
     @Test
-    void shouldTestThePositiveForm() {       // Positive
+    void shouldTestTheValidForm() {   // Valid
         driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Науруз Каппушев-Габараев-Ахмет-Саддин");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79167776655");
@@ -57,7 +57,19 @@ class WebUnterfaceTest {
     }
 
     @Test
-    void shouldTestInvalidPhone() {       // Nagative - invalid phone
+    void shouldTestInvalidName() {       // Invalid name
+        driver.get("http://localhost:9999/");
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Johnny");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+71111111111");
+        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
+        driver.findElement(By.cssSelector("[type=button]")).click();
+
+        String expected = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
+        String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();;
+        assertEquals(expected, actual);
+    }
+    @Test
+    void shouldTestInvalidPhone() {      // Invalid phone
         driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Марат Габараев");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("9991234567");
@@ -65,15 +77,12 @@ class WebUnterfaceTest {
         driver.findElement(By.cssSelector("[type=button]")).click();
 
         String expected = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
-        String actual = driver.findElements(By.cssSelector("[data-test-id=phone]").input_invalid(); // -- Здесь непонятно
-
-
-
+        String actual = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText().trim();
         assertEquals(expected, actual);
     }
 
     @Test
-    void shouldTestUnchecking() {   // Оставляем неотмеченным чек-бокс
+    void shouldTestUnchecking() {   // Invalid check-box
         driver.get("http://localhost:9999/");
         driver.findElements(By.tagName("input")).get(0).sendKeys("Марат Габараев");
         driver.findElements(By.className("input__control")).get(1).sendKeys("+77968645676");
@@ -82,6 +91,17 @@ class WebUnterfaceTest {
         String expected = "Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй";
 
         String actual = driver.findElement(By.cssSelector("[data-test-id=agreement]")).getText().trim();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldTestBlankForm() {   // Invalid blank form
+        driver.get("http://localhost:9999/");
+        driver.findElement(By.cssSelector("[type=button]")).click();
+
+        String expected = "Поле обязательно для заполнения";
+
+        String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
         assertEquals(expected, actual);
     }
 }
