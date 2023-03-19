@@ -56,7 +56,6 @@ class WebUnterfaceTest {
         assertEquals(expected, actual);
     }
 
-    /*
     @Test
     void shouldTestInvalidPhone() {       // Nagative - invalid phone
         driver.get("http://localhost:9999/");
@@ -66,7 +65,7 @@ class WebUnterfaceTest {
         driver.findElement(By.cssSelector("[type=button]")).click();
 
         String expected = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
-        String actual = driver.findElements(By.cssSelector("[data-test-id=phone]")).input_invalid .checkbox_size_m .checkbox__text;
+        String actual = driver.findElements(By.cssSelector("[data-test-id=phone]").input_invalid(); // -- Здесь непонятно
 
 
 
@@ -85,6 +84,4 @@ class WebUnterfaceTest {
         String actual = driver.findElement(By.cssSelector("[data-test-id=agreement]")).getText().trim();
         assertEquals(expected, actual);
     }
-    
-     */
 }
