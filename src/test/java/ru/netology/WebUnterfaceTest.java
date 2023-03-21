@@ -18,16 +18,12 @@ class WebUnterfaceTest {
     private WebDriver driver;
 
     @BeforeAll
-   // static void setUpAll() {
-   //     System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe"); }
 
     static void setupAll() {
         WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
-    //  void setUp() {
-      //  driver = new ChromeDriver();
 
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
@@ -65,7 +61,7 @@ class WebUnterfaceTest {
         driver.findElement(By.cssSelector("[type=button]")).click();
 
         String expected = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
-        String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();;
+        String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
         assertEquals(expected, actual);
     }
     @Test
@@ -84,24 +80,36 @@ class WebUnterfaceTest {
     @Test
     void shouldTestUnchecking() {   // Invalid check-box
         driver.get("http://localhost:9999/");
-        driver.findElements(By.tagName("input")).get(0).sendKeys("Марат Габараев");
-        driver.findElements(By.className("input__control")).get(1).sendKeys("+77968645676");
-        driver.findElement(By.className("button__text")).click();
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Марат Габараев");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+77968645676");
+        driver.findElement(By.cssSelector("[type=button]")).click();
 
         String expected = "Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй";
 
-        String actual = driver.findElement(By.cssSelector("[data-test-id=agreement]")).getText().trim();
+        String actual = driver.findElement(By.cssSelector("[data-test-id=agreement].input_invalid")).getText().trim();
         assertEquals(expected, actual);
     }
 
     @Test
-    void shouldTestBlankForm() {   // Invalid blank form
-        driver.get("http://localhost:9999/");
+    void shouldTestEmptyName() {
+
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79167776655");
+        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.cssSelector("[type=button]")).click();
 
         String expected = "Поле обязательно для заполнения";
-
         String actual = driver.findElement(By.cssSelector("[data-test-id=name].input_invalid .input__sub")).getText().trim();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldTestEmptyPhone() {
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Науруз Каппушев-Габараев-Ахмет-Саддин");
+        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
+        driver.findElement(By.cssSelector("[type=button]")).click();
+
+        String expected = "Поле обязательно для заполнения"; //////!!!
+        String actual = driver.findElement(By.cssSelector("[data-test-id=phone].input_invalid .input__sub")).getText().trim();
         assertEquals(expected, actual);
     }
 }
