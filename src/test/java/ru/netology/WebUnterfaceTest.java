@@ -92,7 +92,7 @@ class WebUnterfaceTest {
 
     @Test
     void shouldTestEmptyName() {
-
+        driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79167776655");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.cssSelector("[type=button]")).click();
@@ -104,6 +104,7 @@ class WebUnterfaceTest {
 
     @Test
     void shouldTestEmptyPhone() {
+        driver.get("http://localhost:9999/");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Науруз Каппушев-Габараев-Ахмет-Саддин");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.cssSelector("[type=button]")).click();
